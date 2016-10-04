@@ -21,6 +21,7 @@ var photoInfo = {
 
           queryString.split('&').forEach(function (pair) {
               var pairArray = pair.split('=');
+
               placesLocation.push(pairArray[1]);
           });
       }
@@ -28,17 +29,26 @@ var photoInfo = {
   }
 
 $.ajax({
-  url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${placesLocation[0]}&lon=${placesLocation[1]}&radius=1&accuracy=11&tags=giants&per_page=10&format=json&nojsoncallback=1`,
+  url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${placesLocation[0]}&lon=${placesLocation[1]}&radius=1&accuracy=11&tags=food,giants&per_page=10&format=json&nojsoncallback=1`,
   method: "GET",
   success: function(data){
+    // for loop to create rows
+    let main = document.getElementById("container");
+      // for loop to create columns
+
     for(let i = 0; i < data.photos.photo.length; i++){
+      if(i % 3 === 0){
+        var rows = document.createElement("div");
+        rows.className = "row col m12";
+        console.log("hello");
+      }
       let path = data.photos.photo[i];
         if(photoInfo.picId.indexOf(data.photos.photo[i].id) === -1 &&   path.id !== undefined && path.farm !== undefined && path.server !== undefined && path.secret !== undefined){
             photoInfo.picId[i] = path.id;
             photoInfo.farmId[i] = path.farm;
             photoInfo.serverId[i] = path.server;
             photoInfo.secretId[i] = path.secret;
-            photoURL.push(`http://farm${photoInfo.farmId[i]}.staticflickr.com/${photoInfo.serverId[i]}/${photoInfo.picId[i]}_${photoInfo.secretId[i]}.jpg`);
+            photoURL.push(`http://farm${photoInfo.farmId[i]}.staticflickr.com/${photoInfo.serverId[i]}/${photoInfo.picId[i]}_${photoInfo.secretId[i]}_n.jpg`);
            $.ajax({
              url:`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=0bf0839ee1fe6ee109720782d7ec8a63&photo_id=${photoInfo.picId[i]}&format=json&nojsoncallback=1`,
              method: "GET",
@@ -47,10 +57,14 @@ $.ajax({
               data.photo.location.country._content;
               photoInfo.county[i] = data.photo.location.county._content;
               photoInfo.imgURL[i] = data.photo.urls.url[0]._content;
-              createDom()
+              //let main = document.getElementById("container");
+              //let rows = document.createElement("div");
+                  //rows.className = "row col m12";
+                  // rows.className = "rows row col m12";
+                  // main.appendChild(rows);
+                  main.appendChild(rows).appendChild(createDom());
 
               function createDom(){
-              var main = document.getElementById("container");
                 //for(let i = 0; i < photoURL.length; i++){
                   let row = document.createElement("div");
                     row.className = "row";
@@ -70,20 +84,23 @@ $.ajax({
                       action.className = "card-action";
                   let anchor = document.createElement("a");
                       anchor.setAttribute("href", photoInfo.imgURL[i]);
-                      anchor.innerText = "link to image"
+                      anchor.innerText = "link to image";
 
-                  var appendToCard = main.appendChild(row).appendChild(col).appendChild(card);
+                  var appendToCard =
+                  (row).appendChild(col).appendChild(card);
 
                   appendToCard.appendChild(cardImg).appendChild(img);
                   appendToCard.appendChild(content).appendChild(paragraph);
                   appendToCard.appendChild(action).appendChild(anchor);
 
+                  return row;
                 //}
               }
              }
           });
         }
       }
+
       //   var main = document.getElementById("container");
       //   for(var i = 0; i < photoURL.length; i++){
       //     let row = $("<div class = 'row'>");

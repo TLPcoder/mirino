@@ -1,0 +1,18 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#map {
+  height: 50%;
+  width:50%;
+  margin: 0 auto;
+  margin-top: 10%;
+}
+#pac-input{
+  margin-top: 15px;
+}
+#map_canvas {
+    margin:0 auto;
+    height:100%;
+}

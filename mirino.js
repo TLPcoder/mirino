@@ -1,25 +1,19 @@
-"use strict"
+"use strict";
+
 window.onload = function(){
+   $(".button-collapse").sideNav();
   initialize();
   function initialize() {
-  var placesLocation = [];
   var lat = 37.79;
-  var lag =  -122.4;
-  var photoInfo = {
-    picId: [],
-    farmId: [],
-    serverId: [],
-    secretId: [],
-    tag: []
-  };
-  var photoURL = [];
-  var pyrmont = new google.maps.LatLng(lat, lag);
+  var lng =  -122.4;
+  var pyrmont = new google.maps.LatLng(lat, lng);
 
   var map = new google.maps.Map(document.getElementById('map'), {
   center: pyrmont,
   zoom: 15,
   scrollwheel: false
   });
+
 
   // Specify location, radius and place types for your Places API search.
   var request = {
@@ -55,6 +49,9 @@ window.onload = function(){
     var tag = document.getElementById("tagInfo").value;
     console.log(tag);
     button.setAttribute("href",`mirinoPhotos.html?lat=${lat}&lng=${lng}&tag=${tag}`);
+    // button.addEventListener("click", function(e){
+    //   getImages(lat, lng);
+    // })
     console.log(lat);
     console.log(lng);
 
@@ -90,4 +87,5 @@ window.onload = function(){
 
   }
 };
+
 //google.maps.event.addDomListener(window, 'load', initialize);

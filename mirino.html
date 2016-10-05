@@ -4,16 +4,28 @@
     <title>Place searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
     <link rel="stylesheet" href="mirino.css" media="screen" title="no title">
     <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <script type="text/javascript" src = "mirino.js"></script>
   </head>
-  <body>
-    <label for="">tag</label>
-    <input id = "tagInfo" type="text">
+  <body id = "page1">
+    <div class = "row">
+      <div class = "col m3"></div>
+      <div class="input-field col m6">
+        <input placeholder = "Enter tags here" id = "tagInfo" type="text" class = "validate center-align">
+      </div>
+      <div class = "col m3"></div>
+    </div>
     <div id="map"></div>
-    <button id = "runButton"><a id = "buttonAnchor">Run</a></button>
-    <!-- <input id = "pac-input" type="text" placeholder="Start tyeping here"> -->
+    <div class = "row" id = "buttonDiv">
+      <div class = "col m5"></div>
+      <div class = "col m2">
+        <button style = "margin-left:30%" class = "btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" id = "runButton"><a id = "buttonAnchor">Run</a></button>
+      </div>
+      <div class = "col m5"></div>
+    </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBraLbgasuPDW47lKPC0dV2sqoMmnzzerc&libraries=places&callback=initMap&callback=initialize" async defer></script>
   </body>
 </html>

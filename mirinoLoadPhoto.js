@@ -21,15 +21,21 @@ var photoInfo = {
 
           queryString.split('&').forEach(function (pair) {
               var pairArray = pair.split('=');
-
+              console.log(pairArray);
+              if(pairArray[0] === "tag"){
+                pairArray[1] = pairArray[1].replace("%20", "%2C");
+                console.log(pairArray[1]);
+                placesLocation.push(pairArray[1]);
+              }else{
               placesLocation.push(pairArray[1]);
+            }
           });
       }
       console.log(placesLocation);
   }
 
 $.ajax({
-  url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${placesLocation[0]}&lon=${placesLocation[1]}&radius=1&accuracy=11&tags=food,giants&per_page=10&format=json&nojsoncallback=1`,
+  url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${placesLocation[0]}&lon=${placesLocation[1]}&radius=1&accuracy=11&tags=${placesLocation[2]}&per_page=5&format=json&nojsoncallback=1`,
   method: "GET",
   success: function(data){
     // for loop to create rows
@@ -48,13 +54,20 @@ $.ajax({
             photoInfo.farmId[i] = path.farm;
             photoInfo.serverId[i] = path.server;
             photoInfo.secretId[i] = path.secret;
-            photoURL.push(`http://farm${photoInfo.farmId[i]}.staticflickr.com/${photoInfo.serverId[i]}/${photoInfo.picId[i]}_${photoInfo.secretId[i]}_n.jpg`);
+            photoURL.push(`http://farm${photoInfo.farmId[i]}.staticflickr.com/${photoInfo.serverId[i]}/${photoInfo.picId[i]}_${photoInfo.secretId[i]}.jpg`);
            $.ajax({
              url:`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=0bf0839ee1fe6ee109720782d7ec8a63&photo_id=${photoInfo.picId[i]}&format=json&nojsoncallback=1`,
              method: "GET",
              success: function(data){
               photoInfo.country[i] =
               data.photo.location.country._content;
+              var tagNames = [];
+              for(let tagNumber = 0; tagNumber < 5; tagNumber++){
+                tagNames.push(data.photo.tags.tag[tagNumber].raw);
+              }
+              console.log(tagNames);
+              photoInfo.tag[i] = tagNames;
+              console.log(data.photo.tags.tag[0].raw);
               photoInfo.county[i] = data.photo.location.county._content;
               photoInfo.imgURL[i] = data.photo.urls.url[0]._content;
               //let main = document.getElementById("container");
@@ -79,7 +92,9 @@ $.ajax({
                   let content = document.createElement("div");
                       content.className = "card-content";
                   let paragraph = document.createElement("p");
-                      paragraph.innerText = photoInfo.county[i];
+                      paragraph.innerText = "#" +  photoInfo.tag[i].join("#");
+                  let paragraph1 = document.createElement("p");
+                      paragraph1.innerText = photoInfo.county[i];
                   let action = document.createElement("div");
                       action.className = "card-action";
                   let anchor = document.createElement("a");
@@ -90,7 +105,7 @@ $.ajax({
                   (row).appendChild(col).appendChild(card);
 
                   appendToCard.appendChild(cardImg).appendChild(img);
-                  appendToCard.appendChild(content).appendChild(paragraph);
+                  appendToCard.appendChild(content).appendChild(paragraph1).appendChild(paragraph);
                   appendToCard.appendChild(action).appendChild(anchor);
 
                   return row;

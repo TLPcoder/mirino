@@ -46,12 +46,13 @@ window.onload = function(){
     var lat = e.latLng.lat();
     var lng = e.latLng.lng();
     var button = document.getElementById("buttonAnchor");
-    var tag = document.getElementById("tagInfo").value;
-    console.log(tag);
-    button.setAttribute("href",`mirinoPhotos.html?lat=${lat}&lng=${lng}&tag=${tag}`);
-    // button.addEventListener("click", function(e){
-    //   getImages(lat, lng);
-    // })
+    // button.setAttribute("href",`mirinoPhotos.html?lat=${lat}&lng=${lng}&tag=${tag}`);
+    button.addEventListener("click", function(e){
+        var tag = document.getElementById("tagInfo").value;
+        console.log("tag information " + tag);
+        changeDom();
+        getImages(lat, lng, tag);
+    });
     console.log(lat);
     console.log(lng);
 
@@ -83,6 +84,10 @@ window.onload = function(){
     //     console.log(placeHolder);
     //   }
     // });
+  });
+
+  document.getElementById("map-button").addEventListener("click", function(e){
+      renderMap();
   });
 
   }

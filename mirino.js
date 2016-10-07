@@ -14,38 +14,12 @@ window.onload = function(){
   scrollwheel: false
   });
 
-
-  // Specify location, radius and place types for your Places API search.
-  var request = {
-  location: pyrmont,
-  radius: '500',
-  types: ['store']
-  };
-
-  // Create the PlaceService and send the request.
-  // Handle the callback with an anonymous function.
-  // var service = new google.maps.places.PlacesService(map);
-  // service.nearbySearch(request, function(results, status) {
-  // if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //   for (var i = 0; i < results.length; i++) {
-  //     var place = results[i];
-  //     // If the request succeeds, draw the place location on
-  //     // the map as a marker, and register an event to handle a
-  //     // click on the marker.
-  //     var marker = new google.maps.Marker({
-  //       map: map,
-  //       position: place.geometry.location
-  //     });
-  //   }
-  // }
-  // });
-
-  //listens for clicks on the map div;
     var marker;
     var circle;
     var imageSort;
     var imagesLoaded;
     var radius;
+    var miles = 500;
     $(".image-sort").click(function(event){
       let buttonId = event.currentTarget.id;
       let button = document.getElementById(buttonId);
@@ -59,6 +33,7 @@ window.onload = function(){
     $(".radius").click(function(event){
       let buttonId = event.currentTarget.id;
       let button = document.getElementById(buttonId);
+      miles = button.value * 500;
       radius = button.value;
     });
     console.log(imageSort);
@@ -85,7 +60,9 @@ window.onload = function(){
               position: {lat:latitude, lng:longitude},
               map: map,
               title: "Your location",
-              label: appName[0]
+              //  label: appName[0],
+              animation: google.maps.Animation.DROP,
+              icon: "http://orig05.deviantart.net/257e/f/2013/284/7/6/free_bouncy_bulbasaur_icon_by_kattling-d6q2fij.gif"
           });
     circle = new google.maps.Circle({
             strokeColor: 'white',
@@ -95,7 +72,7 @@ window.onload = function(){
             fillOpacity: 0.35,
             map: map,
             center: {lat:latitude, lng:longitude},
-            radius: 500,
+            radius: miles,
               });
 
     button.addEventListener("click", function(e){
@@ -109,34 +86,7 @@ window.onload = function(){
     });
     console.log(latitude);
     console.log(longitude);
-    // var loc = location.latLag;
-    // var request = {
-    //   location: e.latLng,
-    //   radius: '500',
-    //   types: ['store']
-    // };
-    //
-    // // Create the PlaceService and send the request.
-    // // Handle the callback with an anonymous function.
-    // var service = new google.maps.places.PlacesService(map);
-    // service.nearbySearch(request, function(results, status) {
-    //   var placeHolder = [];
-    //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //     for (var i = 0; i < results.length; i++) {
-    //       var place = results[i];
-    //       // If the request succeeds, draw the place location on
-    //       // the map as a marker, and register an event to handle a
-    //       // click on the marker.
-    //       placeHolder.push(place);
-    //
-    //       var marker = new google.maps.Marker({
-    //         map: map,
-    //         position: place.geometry.location
-    //       });
-    //     }
-    //     console.log(placeHolder);
-    //   }
-    // });
+
   });
 
   document.getElementById("map-button").addEventListener("click", function(e){

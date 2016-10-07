@@ -9,8 +9,8 @@ window.onload = function(){
   var pyrmont = new google.maps.LatLng(lat, lng);
 
   var map = new google.maps.Map(document.getElementById('map'), {
-  center: pyrmont,
-  zoom: 15,
+  center: {lat:37.79, lng:-122.4},
+  zoom: 13,
   scrollwheel: false
   });
 
@@ -41,21 +41,74 @@ window.onload = function(){
   // });
 
   //listens for clicks on the map div;
-  google.maps.event.addListener(map,'click',function(e){
-    console.log('clicked @'+e.latLng);
-    var lat = e.latLng.lat();
-    var lng = e.latLng.lng();
-    var button = document.getElementById("buttonAnchor");
-    // button.setAttribute("href",`mirinoPhotos.html?lat=${lat}&lng=${lng}&tag=${tag}`);
-    button.addEventListener("click", function(e){
-        var tag = document.getElementById("tagInfo").value;
-        console.log("tag information " + tag);
-        changeDom();
-        getImages(lat, lng, tag);
+    var marker;
+    var circle;
+    var imageSort;
+    var imagesLoaded;
+    var radius;
+    $(".image-sort").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      imageSort = button.value;
     });
-    console.log(lat);
-    console.log(lng);
+    $(".imagesLoaded").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      imagesLoaded = button.value;
+    });
+    $(".radius").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      radius = button.value;
+    });
+    console.log(imageSort);
+  google.maps.event.addListener(map,'click',function(e){
+    if(marker){
+      marker.setMap(null);
+    }
+    if(circle){
+      circle.setMap(null);
+    }
+    console.log('clicked @'+e.latLng);
+    var latitude = e.latLng.lat();
+    var longitude = e.latLng.lng();
+    var button = document.getElementById("buttonAnchor");
+    let appName = "Mirino";
+    let clickMe = document.getElementById("click-me");
+    let rel = document.getElementById("rel");
+    console.log(rel.value);
 
+    $(clickMe).css("z-index",0);
+
+    marker = new google.maps.Marker({
+              draggable: true,
+              position: {lat:latitude, lng:longitude},
+              map: map,
+              title: "Your location",
+              label: appName[0]
+          });
+    circle = new google.maps.Circle({
+            strokeColor: 'white',
+            strokeOpacity: 0.9,
+            strokeWeight: 2,
+            fillColor: '#03a9f4',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat:latitude, lng:longitude},
+            radius: 500,
+              });
+
+    button.addEventListener("click", function(e){
+        let tag = document.getElementById("tagInfo").value;
+        let menuButton = document.getElementsByClassName("menu")[0];
+        // let pageNumber = document.getElementById("number-of-images").value;
+        // let radius = document.getElementById("radius").value;
+        menuButton.style.color = "#5c6bc0";
+        changeDom();
+        getImages(latitude, longitude, tag, imageSort, imagesLoaded, radius);
+    });
+    console.log(latitude);
+    console.log(longitude);
     // var loc = location.latLag;
     // var request = {
     //   location: e.latLng,

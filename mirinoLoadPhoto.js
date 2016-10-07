@@ -38,12 +38,26 @@ var photoInfo = {
   //     console.log(placesLocation);
   // }
 
-function getImages(lat, lng, tag) {
-  console.log(tag);
+function getImages(lat, lng, tag, imageSort, imagesLoaded, radius) {
+  if(imageSort === undefined){
+    console.log("imageSort " + undefined);
+    imageSort = "relevance";
+  }
+  if(imagesLoaded === undefined){
+    imagesLoaded = 20;
+  }
+  if(radius === undefined){
+    radius = 1;
+  }
+  radius = Number(radius);
+  console.log("imageSort " + imageSort + " imagesLoaded " + imagesLoaded + " radius " + radius);
   $.ajax({
-    url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${lat}&lon=${lng}&radius=1&accuracy=11&tags=${tag}&per_page=40&format=json&nojsoncallback=1`,
+    url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${lat}&lon=${lng}&radius=${radius}&accuracy=11&tags=${tag}&sort=${imageSort}&per_page=${imagesLoaded}&radius_units=mi&format=json&nojsoncallback=1`,
+
+    // `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&tags=${tag}&per_page=100&safe_search=3&format=json&nojsoncallback=1`
     method: "GET",
     success: function(data){
+      console.log(data)
       let removeImages = document.getElementById("image-container");
           removeImages.innerHTML = "";
       photoInfo = {
@@ -111,31 +125,34 @@ function createDom(i){
     let row = document.createElement("div");
       row.className = "row col l3";
     let col = document.createElement("div");
-      col.className = "col m12 m7";
-    let card = document.createElement("div");
-      card.className = "card small";
-    let cardImg = document.createElement("div");
-      cardImg.className = "card-image";
+      col.className = "col l12 l7";
+    // let card = document.createElement("div");
+    //   card.className = "card small";
+    // let cardImg = document.createElement("div");
+    //   cardImg.className = "card-image";
     let img = document.createElement("img");
+        img.className = "images";
         img.setAttribute('src', photoURL[i]);
-    let content = document.createElement("div");
-        content.className = "card-content";
-    let paragraph = document.createElement("p");
-        paragraph.innerText = "#" +  photoInfo.tag[i].join("#");
-    let paragraph1 = document.createElement("p");
-        paragraph1.innerText = photoInfo.county[i];
-    let action = document.createElement("div");
-        action.className = "card-action";
+    // let content = document.createElement("div");
+    //     content.className = "card-content";
+    // let paragraph = document.createElement("p");
+    //     paragraph.innerText = "#" +  photoInfo.tag[i].join("#");
+    // let paragraph1 = document.createElement("p");
+    //     paragraph1.innerText = photoInfo.county[i];
+    // let action = document.createElement("div");
+    //     action.className = "card-action";
     let anchor = document.createElement("a");
         anchor.setAttribute("href", photoInfo.imgURL[i]);
-        anchor.innerText = "link to image";
+        anchor.setAttribute("target", "_blank");
 
     var appendToCard =
-    (row).appendChild(col).appendChild(card);
+    (row).appendChild(col);//.appendChild(card);
 
-    appendToCard.appendChild(cardImg).appendChild(img);
-    appendToCard.appendChild(content)//.appendChild(paragraph1).appendChild(paragraph);
-    appendToCard.appendChild(action).appendChild(anchor);
+    appendToCard.appendChild(anchor).appendChild(img);
+
+    // appendToCard.appendChild(cardImg).appendChild(img);
+    //appendToCard.appendChild(content).appendChild(paragraph1).appendChild(paragraph);
+    //appendToCard.appendChild(action)
 
     return row;
   //}

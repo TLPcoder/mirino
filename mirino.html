@@ -5,6 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
         <script   src="http://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
     <link rel="stylesheet" href="mirino.css" media="screen" title="no title">
@@ -14,24 +15,49 @@
   <body id = "page1">
     <div id = "white-container">
       <div class = "row"></div>
-      <!-- <div id = "sideBar">
-        <ul id="slide-out" class="side-nav">
-        <li><div class="userView">
-          <img class="background" src="#">
-          <a href="#"><img class="circle" src="#"></a>
-          <a href="#"><span class="white-text name">John Doe</span></a>
-          <a href="#"><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-      </ul>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div> -->
       <div class = "row">
-        <div class = "col m2"></div>
+        <div class = "col m2">
+          <div id = "sideBar">
+            <ul id="slide-out" class="side-nav">
+            <!-- <li><div class="userView">
+              <a href="#"><span class="white-text name">Trevor Pellegrini</span></a>
+              <a href="#"><span class="white-text email">trevorpellegrini@gmail.com</span></a>
+              <img class="background" src="https://hd.unsplash.com/photo-1425342605259-25d80e320565" height="250px" width="300px">
+            </div></li> -->
+            <br>
+            <p class = "labels" style = "margin-left:94px;">Sort Image</p>
+                <button id = "rel" class = "image-sort btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="relevance" style = "margin-left:17%; width:190px">Relevant</button>
+                <br><br>
+                <button id = "asc" class = "image-sort btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="date-posted-asc" style = "margin-left:17%;width:190px">Ascending order</button>
+                <br><br>
+                <button id = "des" class = "image-sort btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="date-posted-desc" style = "margin-left:17%;width:190px">Descending order</button>
+            <br><br>
+            <p class = "labels" style = "margin-left:56px;">Number of Images</p>
+                <button id = "20" class = "imagesLoaded btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="20" style = "margin-left:10%;">20</button>
+                <button id = "40" class = "imagesLoaded btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="40" style = "margin-left:10%;">40</button>
+               <button id = "80" class = "imagesLoaded btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value= "80" style = "margin-left:10%;">80</button>
+            <br><br>
+            <p class = "labels" style = "margin-left:112px;">Radius</p>
+                <button id = "1-miles" class = "radius btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="1" style = "margin-left:10%;">1</button>
+                <button id = "5-miles" class = "radius  btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value="5" style = "margin-left:10%;">5</button>
+               <button id = "10-miles" class = "radius  btn-floating btn-large waves-effect waves-light indigo lighten-1 center-align" type="button" value= "10" style = "margin-left:10%;">10</button>
+            <!-- <li><input class = "center-align filters" placeholder="Number of images" id = "number-of-images" type="text" style="  color:black;
+              font-size: 1.5em;
+              border-bottom: 1px solid #03a9f4;
+              -webkit-box-shadow: 0 1px 0 0 #03a9f4;
+              -moz-box-shadow: 0 1px 0 0 #03a9f4;
+              box-shadow: 0 1px 0 0 #03a9f4;"></li>
+            <li><input id = "radius" class = "center-align filters" placeholder="Radius" type="text" style = "  color:black;
+              font-size: 1.5em;
+              border-bottom: 1px solid #03a9f4;
+              -webkit-box-shadow: 0 1px 0 0 #03a9f4;
+              -moz-box-shadow: 0 1px 0 0 #03a9f4;
+              box-shadow: 0 1px 0 0 #03a9f4;"></li> -->
+            <br>
+          </ul>
+          <a href="#" styke data-activates="slide-out" class="button-collapse" style = "color:white; text-decoration:none"><i class="small lighten-1 center-align material-icons menu">view_headline</i></a>
+        </div>
+      </div>
         <div id ="map-button" class = "col m1">
         </div>
         <div class="input-field col m6">
@@ -43,6 +69,7 @@
         <div class = "col m2"></div>
       </div>
           <div id="map"></div>
+              <p id = "click-me">Click the Map to Search</p>
           <div id = "image-container" class="center-block"></div>
       <div class = "row" id = "buttonDiv">
         <div class = "col m5"></div>
@@ -53,6 +80,6 @@
       </div>
     </div>
       <script
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBraLbgasuPDW47lKPC0dV2sqoMmnzzerc&libraries=places&callback=initMap&callback=initialize" async defer></script>
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBraLbgasuPDW47lKPC0dV2sqoMmnzzerc&libraries=places&callback=initialize" async defer></script>
   </body>
 </html>

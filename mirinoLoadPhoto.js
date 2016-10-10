@@ -1,8 +1,5 @@
 "use strict"
-// $(document).ready(function(){
-//   $(".button-collapse").sideNav();
-// });
-  // $("#page2").css("background-image", "url('https://source.unsplash.com/category/nature')");
+
 var placesLocation = [];
 var photoInfo = {
   picId: [],

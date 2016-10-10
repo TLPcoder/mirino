@@ -1,134 +1,149 @@
-"use strict"
-function initialize() {
-var placesLocation = [];
-var lat = 37.79;
-var lag =  -122.4;
-var photoInfo = {
-  picId: [],
-  farmId: [],
-  serverId: [],
-  secretId: [],
-  tag: []
-};
-var photoURL = [];
-var pyrmont = new google.maps.LatLng(lat, lag);
+"use strict";
 
-var map = new google.maps.Map(document.getElementById('map'), {
-center: pyrmont,
-zoom: 15,
-scrollwheel: false
-});
+window.onload = function(){
+   $(".button-collapse").sideNav();
+  initialize();
+  function initialize() {
+  var lat = 37.79;
+  var lng =  -122.4;
+  var pyrmont = new google.maps.LatLng(lat, lng);
 
-// Specify location, radius and place types for your Places API search.
-var request = {
-location: pyrmont,
-radius: '500',
-types: ['store']
-};
-
-// Create the PlaceService and send the request.
-// Handle the callback with an anonymous function.
-// var service = new google.maps.places.PlacesService(map);
-// service.nearbySearch(request, function(results, status) {
-// if (status == google.maps.places.PlacesServiceStatus.OK) {
-//   for (var i = 0; i < results.length; i++) {
-//     var place = results[i];
-//     // If the request succeeds, draw the place location on
-//     // the map as a marker, and register an event to handle a
-//     // click on the marker.
-//     var marker = new google.maps.Marker({
-//       map: map,
-//       position: place.geometry.location
-//     });
-//   }
-// }
-// });
-
-//listens for clicks on the map div;
-google.maps.event.addListener(map,'click',function(e){
-  console.log('clicked @'+e.latLng);
-  var lat = e.latLng.lat();
-  var lng = e.latLng.lng();
-  console.log(lat);
-  console.log(lng);
-  $.ajax({
-    url:`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0bf0839ee1fe6ee109720782d7ec8a63&safe_search=1&has_geo=true&lat=${lat}&lon=${lng}&radius=1&accuracy=11&tags=giants&per_page=10&format=json&nojsoncallback=1`,
-    method: "GET",
-    success: function(data){
-      for(let i = 0; i < data.photos.photo.length; i++){
-        let path = data.photos.photo[i];
-          if(photoInfo.picId.indexOf(data.photos.photo[i].id) === -1 &&   path.id !== undefined && path.farm !== undefined && path.server !== undefined && path.secret !== undefined){
-              photoInfo.picId[i] = path.id;
-              photoInfo.farmId[i] = path.farm;
-              photoInfo.serverId[i] = path.server;
-              photoInfo.secretId[i] = path.secret;
-              photoURL.push(`http://farm${photoInfo.farmId[i]}.staticflickr.com/${photoInfo.serverId[i]}/${photoInfo.picId[i]}_${photoInfo.secretId[i]}.jpg`);
-          // for(let i = 0; i <= photoInfo.picId.length;i++){
-            //http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-
-            //  $.ajax({
-            //    url:`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=0bf0839ee1fe6ee109720782d7ec8a63&photo_id=${photoInfo.picId[i]}&format=json&nojsoncallback=1`,
-            //    method: "GET",
-            //    success: function(data){
-            //      if(photoURL.indexOf(data.photo.urls.url[0]._content) === -1){
-            //        photoURL.push(data.photo.urls.url[0]._content);
-            //      }
-            //    }
-            //  });
-           //}
-        }
-      }
-      console.log(photoInfo);
-      console.log(photoURL);
-    }
+  var map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat:37.79, lng:-122.4},
+  zoom: 13,
+  scrollwheel: false
   });
-  var main = document.getElementById("container");
-  for(var i = 0; i < photoURL; i++){
-    var img = document.createElement("img");
-    var currentImg = img.setAttribute('src', photoURL[i]);
-    $(main).append(currentImg);
-}
-    //  for(let i = 0; i <= photoID.length;i++){
-    //     $.ajax({
-    //       url:`https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=0bf0839ee1fe6ee109720782d7ec8a63&photo_id=${photoID[i]}&format=json&nojsoncallback=1`,
-    //       method: "GET",
-    //       success: function(data){
-    //         if(photoURL.indexOf(data.photo.urls.url[0]._content) === -1){
-    //           photoURL.push(data.photo.urls.url[0]._content);
-    //         }
-    //       }
-    //     });
-    //   }
-    //   console.log(photoURL);
 
-  // var loc = location.latLag;
-  // var request = {
-  //   location: e.latLng,
-  //   radius: '500',
-  //   types: ['store']
-  // };
-  //
-  // // Create the PlaceService and send the request.
-  // // Handle the callback with an anonymous function.
+
+  // Specify location, radius and place types for your Places API search.
+  var request = {
+  location: pyrmont,
+  radius: '500',
+  types: ['store']
+  };
+
+  // Create the PlaceService and send the request.
+  // Handle the callback with an anonymous function.
   // var service = new google.maps.places.PlacesService(map);
   // service.nearbySearch(request, function(results, status) {
-  //   var placeHolder = [];
-  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //     for (var i = 0; i < results.length; i++) {
-  //       var place = results[i];
-  //       // If the request succeeds, draw the place location on
-  //       // the map as a marker, and register an event to handle a
-  //       // click on the marker.
-  //       placeHolder.push(place);
-  //
-  //       var marker = new google.maps.Marker({
-  //         map: map,
-  //         position: place.geometry.location
-  //       });
-  //     }
-  //     console.log(placeHolder);
+  // if (status == google.maps.places.PlacesServiceStatus.OK) {
+  //   for (var i = 0; i < results.length; i++) {
+  //     var place = results[i];
+  //     // If the request succeeds, draw the place location on
+  //     // the map as a marker, and register an event to handle a
+  //     // click on the marker.
+  //     var marker = new google.maps.Marker({
+  //       map: map,
+  //       position: place.geometry.location
+  //     });
   //   }
+  // }
   // });
-});
-}
+
+  //listens for clicks on the map div;
+    var marker;
+    var circle;
+    var imageSort;
+    var imagesLoaded;
+    var radius;
+    $(".image-sort").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      imageSort = button.value;
+    });
+    $(".imagesLoaded").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      imagesLoaded = button.value;
+    });
+    $(".radius").click(function(event){
+      let buttonId = event.currentTarget.id;
+      let button = document.getElementById(buttonId);
+      radius = button.value;
+    });
+    console.log(imageSort);
+  google.maps.event.addListener(map,'click',function(e){
+    if(marker){
+      marker.setMap(null);
+    }
+    if(circle){
+      circle.setMap(null);
+    }
+    console.log('clicked @'+e.latLng);
+    var latitude = e.latLng.lat();
+    var longitude = e.latLng.lng();
+    var button = document.getElementById("buttonAnchor");
+    let appName = "Mirino";
+    let clickMe = document.getElementById("click-me");
+    let rel = document.getElementById("rel");
+    console.log(rel.value);
+
+    $(clickMe).css("z-index",0);
+
+    marker = new google.maps.Marker({
+              draggable: true,
+              position: {lat:latitude, lng:longitude},
+              map: map,
+              title: "Your location",
+              label: appName[0]
+          });
+    circle = new google.maps.Circle({
+            strokeColor: 'white',
+            strokeOpacity: 0.9,
+            strokeWeight: 2,
+            fillColor: '#03a9f4',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat:latitude, lng:longitude},
+            radius: 500,
+              });
+
+    button.addEventListener("click", function(e){
+        let tag = document.getElementById("tagInfo").value;
+        let menuButton = document.getElementsByClassName("menu")[0];
+        // let pageNumber = document.getElementById("number-of-images").value;
+        // let radius = document.getElementById("radius").value;
+        menuButton.style.color = "#5c6bc0";
+        changeDom();
+        getImages(latitude, longitude, tag, imageSort, imagesLoaded, radius);
+    });
+    console.log(latitude);
+    console.log(longitude);
+    // var loc = location.latLag;
+    // var request = {
+    //   location: e.latLng,
+    //   radius: '500',
+    //   types: ['store']
+    // };
+    //
+    // // Create the PlaceService and send the request.
+    // // Handle the callback with an anonymous function.
+    // var service = new google.maps.places.PlacesService(map);
+    // service.nearbySearch(request, function(results, status) {
+    //   var placeHolder = [];
+    //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+    //     for (var i = 0; i < results.length; i++) {
+    //       var place = results[i];
+    //       // If the request succeeds, draw the place location on
+    //       // the map as a marker, and register an event to handle a
+    //       // click on the marker.
+    //       placeHolder.push(place);
+    //
+    //       var marker = new google.maps.Marker({
+    //         map: map,
+    //         position: place.geometry.location
+    //       });
+    //     }
+    //     console.log(placeHolder);
+    //   }
+    // });
+  });
+
+  document.getElementById("map-button").addEventListener("click", function(e){
+      renderMap();
+  });
+
+  }
+};
+
 //google.maps.event.addDomListener(window, 'load', initialize);

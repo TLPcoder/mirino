@@ -1,5 +1,9 @@
 "use strict"
 
+// $(document).ready(function(){
+//   $(".button-collapse").sideNav();
+// });
+  // $("#page2").css("background-image", "url('https://source.unsplash.com/category/nature')");
 var placesLocation = [];
 var photoInfo = {
   picId: [],
@@ -12,6 +16,28 @@ var photoInfo = {
   imgURL: []
 };
   var photoURL = [];
+
+  // readQueryParams();
+  //
+  // function readQueryParams() {
+  //
+  //     if(document.location.search) {
+  //         var queryString = document.location.search.replace('?', '');
+  //
+  //         queryString.split('&').forEach(function (pair) {
+  //             var pairArray = pair.split('=');
+  //             console.log(pairArray);
+  //             if(pairArray[0] === "tag"){
+  //               pairArray[1] = pairArray[1].replace("%20", "%2C");
+  //               console.log(pairArray[1]);
+  //               placesLocation.push(pairArray[1]);
+  //             }else{
+  //             placesLocation.push(pairArray[1]);
+  //           }
+  //         });
+  //     }
+  //     console.log(placesLocation);
+  // }
 
 function getImages(lat, lng, tag, imageSort, imagesLoaded, radius) {
   if(imageSort === undefined){
@@ -177,3 +203,16 @@ function createDom(i){
     // mapButtonDiv.innerHTML = "";
   }
  }
+
+      //   var main = document.getElementById("container");
+      //   for(var i = 0; i < photoURL.length; i++){
+      //     let row = $("<div class = 'row'>");
+      //     let col = $("<div class = 'col s12 m7'>");
+      //     let card = $("<div class = 'card'>");
+      //     let cardImg = $("<div class = 'card-image'>");
+      //     let img = $(`<img src = ${photoURL[i]}>`);
+      //     let content =  $("<div class='card-content'>");
+      //     let para = $("<p>");
+      //      $(para).text("Hello");
+      //     //let currentImg = img.setAttribute('src', photoURL[i]);
+      //     $(main).append(row).append(col).append(card).append(cardImg).append(img).append(content).append(para);

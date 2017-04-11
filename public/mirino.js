@@ -78,8 +78,6 @@ window.onload = function(){
     button.addEventListener("click", function(e){
         let tag = document.getElementById("tagInfo").value;
         let menuButton = document.getElementsByClassName("menu")[0];
-        // let pageNumber = document.getElementById("number-of-images").value;
-        // let radius = document.getElementById("radius").value;
         menuButton.style.color = "#5c6bc0";
         changeDom();
         getImages(latitude, longitude, tag, imageSort, imagesLoaded, radius);
@@ -95,5 +93,3 @@ window.onload = function(){
 
   }
 };
-
-//google.maps.event.addDomListener(window, 'load', initialize);
